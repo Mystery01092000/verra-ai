@@ -133,39 +133,6 @@ cd code/backend  && docker compose up -d # data plane + microservices
 make dev                                 # run everything
 ```
 
-## 🧩 Skills demonstrated
-
-<table>
-<tr><td valign="top" width="33%">
-
-**Product**
-- Problem framing & segmentation
-- Competitive analysis & positioning
-- PRD/BRD, MVP scoping
-- UX modeled on a best‑in‑class app
-- Roadmap + Sprint‑0 backlog
-
-</td><td valign="top" width="33%">
-
-**AI / ML systems**
-- Multi‑agent orchestration
-- RAG with citations & confidence
-- Guardrails + human‑in‑the‑loop
-- Model routing, fallbacks, cost/token control
-- Eval harness & release gating
-
-</td><td valign="top" width="33%">
-
-**Engineering**
-- Microservice architecture (Python/FastAPI)
-- Next.js frontend + design system
-- Data modeling, multi‑tenancy (RLS)
-- CI/CD, IaC, Kubernetes
-- ADR‑driven decision making
-
-</td></tr>
-</table>
-
 ## 🗺 Repository map
 
 ```
