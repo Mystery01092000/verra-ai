@@ -1,0 +1,60 @@
+openapi: 3.1.0
+info: { title: Verra Orchestrator API, version: 0.1.0, description: Common orchestration API for all modules (ADR-0001). }
+servers: [{ url: https://api.verra.example/v1 }]
+security: [{ bearerAuth: [] }]
+paths:
+  /runs:
+    post:
+      summary: Start a run
+      operationId: createRun
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: '#/components/schemas/RunRequest' } } }
+      responses:
+        '202':
+          description: Accepted
+          content: { application/json: { schema: { $ref: '#/components/schemas/RunAccepted' } } }
+  /runs/{id}:
+    get:
+      summary: Get run status
+      operationId: getRun
+      parameters: [{ name: id, in: path, required: true, schema: { type: string } }]
+      responses: { '200': { description: OK, content: { application/json: { schema: { $ref: '#/components/schemas/RunResult' } } } } }
+  /runs/{id}/events:
+    get: { summary: Server-sent event stream of run progress, operationId: streamRun,
+      parameters: [{ name: id, in: path, required: true, schema: { type: string } }],
+      responses: { '200': { description: text/event-stream } } }
+  /runs/{id}/approve:
+    post: { summary: Resolve a human approval gate, operationId: approveRun,
+      parameters: [{ name: id, in: path, required: true, schema: { type: string } }],
+      responses: { '200': { description: OK } } }
+  /runs/{id}/reject:
+    post: { summary: Reject a gated action, operationId: rejectRun,
+      parameters: [{ name: id, in: path, required: true, schema: { type: string } }],
+      responses: { '200': { description: OK } } }
+components:
+  securitySchemes: { bearerAuth: { type: http, scheme: bearer } }
+  schemas:
+    RunRequest:
+      type: object
+      required: [tenantId, module, capability, input]
+      properties:
+        tenantId: { type: string }
+        module: { type: string, enum: [tax, books, audit, compliance, assistant] }
+        capability: { type: string, example: tax_analysis }
+        input: { type: object, additionalProperties: true }
+        contextRefs: { type: array, items: { type: string } }
+        budget: { type: object, properties: { maxUsd: { type: number }, maxTokens: { type: integer } } }
+        approval: { type: object, properties: { mode: { type: string, enum: [required, auto] }, callback: { type: string } } }
+        idempotencyKey: { type: string }
+    RunAccepted: { type: object, properties: { runId: { type: string }, stream: { type: string } } }
+    Citation: { type: object, properties: { docId: { type: string }, page: { type: integer }, rule: { type: string } } }
+    RunResult:
+      type: object
+      properties:
+        runId: { type: string }
+        status: { type: string, enum: [planned, routed, executing, verifying, awaiting_approval, done, failed] }
+        output: {}
+        citations: { type: array, items: { $ref: '#/components/schemas/Citation' } }
+        cost: { type: object, properties: { usd: { type: number }, tokensIn: { type: integer }, tokensOut: { type: integer } } }
+        receiptId: { type: string }

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1480" height="980" viewBox="0 0 1480 980" font-family="Arial, Helvetica, sans-serif">
+<rect width="1480" height="980" fill="#FBFAFF"/>
+<text x="40" y="44" font-size="26" font-weight="bold" fill="#111114">Deployment Topology (per region; multi-region active-active)</text>
+<defs><marker id="d" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#8A8A95"/></marker></defs>
+<!-- edge -->
+<rect x="40" y="80" width="1400" height="70" rx="12" fill="#111114"/>
+<text x="60" y="112" font-size="15" font-weight="bold" fill="#fff">Edge</text>
+<text x="60" y="134" font-size="13" fill="#C9CBE8">CDN · WAF · Global load balancer · TLS · DDoS</text>
+<!-- k8s cluster box -->
+<rect x="40" y="175" width="1090" height="560" rx="14" fill="#fff" stroke="#5566FF" stroke-width="2"/>
+<text x="60" y="202" font-size="15" font-weight="bold" fill="#3A33C9">Kubernetes cluster (autoscaled; bulkheads per service)</text>
+<!-- app tier -->
+<rect x="70" y="220" width="480" height="120" rx="10" fill="#E6E8FF" stroke="#5566FF"/>
+<text x="86" y="245" font-size="14" font-weight="bold" fill="#3A33C9">App tier</text>
+<rect x="86" y="258" width="210" height="66" rx="8" fill="#fff" stroke="#C9CDF6"/><text x="100" y="284" font-size="13" font-weight="bold">Web (Next.js)</text><text x="100" y="304" font-size="12" fill="#5B5B66">SSR, streaming UI</text>
+<rect x="320" y="258" width="210" height="66" rx="8" fill="#fff" stroke="#C9CDF6"/><text x="334" y="284" font-size="13" font-weight="bold">API Gateway</text><text x="334" y="304" font-size="12" fill="#5B5B66">authN/Z, rate-limit</text>
+<!-- orchestrator tier -->
+<rect x="70" y="360" width="1030" height="160" rx="10" fill="#EFF0FE" stroke="#C9CDF6"/>
+<text x="86" y="385" font-size="14" font-weight="bold" fill="#3A33C9">Orchestrator tier</text>
+<rect x="86" y="398" width="230" height="100" rx="8" fill="#fff" stroke="#5566FF"/><text x="100" y="423" font-size="13" font-weight="bold">Orchestrator svc</text><text x="100" y="443" font-size="12" fill="#5B5B66">Planner/Router/</text><text x="100" y="461" font-size="12" fill="#5B5B66">Executor/Critic</text><text x="100" y="485" font-size="12" fill="#5B5B66">+ guardrails, cost/token</text>
+<rect x="332" y="398" width="230" height="100" rx="8" fill="#fff" stroke="#C9CDF6"/><text x="346" y="423" font-size="13" font-weight="bold">Temporal workers</text><text x="346" y="443" font-size="12" fill="#5B5B66">durable workflows,</text><text x="346" y="461" font-size="12" fill="#5B5B66">checkpoint/resume</text>
+<rect x="578" y="398" width="230" height="100" rx="8" fill="#111114"/><text x="592" y="423" font-size="13" font-weight="bold" fill="#fff">Model Gateway</text><text x="592" y="443" font-size="12" fill="#C9CBE8">provider abstraction,</text><text x="592" y="461" font-size="12" fill="#C9CBE8">fallback, hedging</text>
+<rect x="824" y="398" width="250" height="100" rx="8" fill="#fff" stroke="#C9CDF6"/><text x="838" y="423" font-size="13" font-weight="bold">Ingestion/RAG + Tools</text><text x="838" y="443" font-size="12" fill="#5B5B66">OCR/parse, embed,</text><text x="838" y="461" font-size="12" fill="#5B5B66">MCP tool sandbox</text>
+<!-- data tier -->
+<rect x="70" y="540" width="1030" height="170" rx="10" fill="#F4F4FF" stroke="#C9CDF6"/>
+<text x="86" y="565" font-size="14" font-weight="bold" fill="#3A33C9">Data plane</text>
+<rect x="86" y="578" width="230" height="112" rx="8" fill="#fff" stroke="#C9CDF6"/><text x="100" y="603" font-size="13" font-weight="bold">PostgreSQL</text><text x="100" y="623" font-size="12" fill="#5B5B66">state + immutable audit</text><text x="100" y="643" font-size="12" fill="#5B5B66">+ pgvector (RAG)</text><text x="100" y="667" font-size="12" fill="#5B5B66">RLS multi-tenancy</text>
+<rect x="332" y="578" width="210" height="112" rx="8" fill="#fff" stroke="#C9CDF6"/><text x="346" y="603" font-size="13" font-weight="bold">Redis</text><text x="346" y="623" font-size="12" fill="#5B5B66">cache, queues,</text><text x="346" y="643" font-size="12" fill="#5B5B66">rate limits</text>
+<rect x="558" y="578" width="230" height="112" rx="8" fill="#fff" stroke="#C9CDF6"/><text x="572" y="603" font-size="13" font-weight="bold">Object store (S3)</text><text x="572" y="623" font-size="12" fill="#5B5B66">documents, exports</text><text x="572" y="643" font-size="12" fill="#5B5B66">encrypted</text>
+<rect x="804" y="578" width="270" height="112" rx="8" fill="#fff" stroke="#C9CDF6"/><text x="818" y="603" font-size="13" font-weight="bold">Secrets Vault · IdP</text><text x="818" y="623" font-size="12" fill="#5B5B66">OIDC/SSO/SCIM,</text><text x="818" y="643" font-size="12" fill="#5B5B66">KMS, per-tenant keys</text>
+<!-- external column -->
+<rect x="1150" y="175" width="290" height="560" rx="14" fill="#fff" stroke="#C9CDF6" stroke-width="1.6"/>
+<text x="1170" y="202" font-size="14" font-weight="bold" fill="#111114">External</text>
+<rect x="1170" y="220" width="250" height="80" rx="8" fill="#E6E8FF" stroke="#5566FF"/><text x="1184" y="246" font-size="13" font-weight="bold" fill="#3A33C9">Model providers</text><text x="1184" y="266" font-size="12" fill="#5B5B66">Anthropic, alt, self-host</text><text x="1184" y="286" font-size="12" fill="#5B5B66">zero-retention</text>
+<rect x="1170" y="312" width="250" height="74" rx="8" fill="#fff" stroke="#C9CDF6"/><text x="1184" y="338" font-size="13" font-weight="bold">Integrations</text><text x="1184" y="358" font-size="12" fill="#5B5B66">QuickBooks/Xero, Plaid,</text><text x="1184" y="376" font-size="12" fill="#5B5B66">Google/M365, CRM</text>
+<rect x="1170" y="398" width="250" height="74" rx="8" fill="#fff" stroke="#C9CDF6"/><text x="1184" y="424" font-size="13" font-weight="bold">Filing gateways</text><text x="1184" y="444" font-size="12" fill="#5B5B66">IRS MeF, GSTN,</text><text x="1184" y="462" font-size="12" fill="#5B5B66">Companies House</text>
+<rect x="1170" y="484" width="250" height="100" rx="8" fill="#E2F6EE" stroke="#1FBF75"/><text x="1184" y="510" font-size="13" font-weight="bold" fill="#0d8f57">Observability</text><text x="1184" y="530" font-size="12" fill="#5B5B66">OTel collector,</text><text x="1184" y="548" font-size="12" fill="#5B5B66">traces/metrics/logs,</text><text x="1184" y="568" font-size="12" fill="#5B5B66">LLM evals + dashboards</text>
+<rect x="1170" y="596" width="250" height="120" rx="8" fill="#FBF0DC" stroke="#E5A33B"/><text x="1184" y="622" font-size="13" font-weight="bold" fill="#9a6a15">CI/CD &amp; IaC</text><text x="1184" y="642" font-size="12" fill="#5B5B66">GitHub Actions,</text><text x="1184" y="660" font-size="12" fill="#5B5B66">Terraform, Helm,</text><text x="1184" y="678" font-size="12" fill="#5B5B66">Docker images</text>
+<line x1="740" y1="150" x2="740" y2="175" stroke="#8A8A95" stroke-width="2" marker-end="url(#d)"/>
+<text x="40" y="770" font-size="13" fill="#8A8A95">Multi-region active-active for residency + DR (RTO/RPO targets in System Design). All internal traffic mTLS; egress allow-listed.</text>
+</svg>

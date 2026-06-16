@@ -1,0 +1,9 @@
+name: CD
+on: { push: { tags: ['v*'] } }
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "TODO build and push images, helm upgrade canary, smoke plus online evals, then promote"

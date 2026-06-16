@@ -1,0 +1,18 @@
+# node / next / turbo
+node_modules/
+dist/
+.next/
+.turbo/
+# python
+__pycache__/
+*.pyc
+.venv/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+# env & misc
+.env
+.env.*
+!*.example
+*.log
+.DS_Store

@@ -1,0 +1,31 @@
+Sprint,Epic,StoryID,Title,Type,Priority,Estimate,AcceptanceCriteria,DependsOn
+0,E1 Foundations,VERRA-001,Monorepo + tooling (pnpm/turbo/TS/lint/format),Chore,P0,3,"pnpm install/build/lint/typecheck/test run green in CI",
+0,E1 Foundations,VERRA-002,CI pipeline (lint+typecheck+test+build+eval stub),Chore,P0,3,"CI runs on PR; required checks block merge",VERRA-001
+0,E1 Foundations,VERRA-003,Local dev env via docker-compose (pg+pgvector/redis/minio),Chore,P0,2,"`make up` brings up data plane; schema initialized",VERRA-001
+0,E1 Foundations,VERRA-004,Observability skeleton (OTel tracing + correlation id),Feature,P0,3,"one trace per request visible in collector",VERRA-002
+0,E8 Data/Tenancy,VERRA-005,Core schema + migrations (ERD),Feature,P0,5,"tables created; migration up/down; seed script",VERRA-003
+0,E8 Data/Tenancy,VERRA-006,Multi-tenancy via RLS + tenant context propagation,Feature,P0,5,"cross-tenant read blocked by RLS test",VERRA-005
+0,E2 Orchestrator,VERRA-007,API gateway (authN/Z stub, rate limit, idempotency),Feature,P0,5,"/v1/runs authenticated, tenant-scoped, idempotent",VERRA-004
+0,E2 Orchestrator,VERRA-008,Supervisor run state machine + durable workflow spike,Feature,P0,5,"run persists state; resumes after restart",VERRA-007
+0,E2 Orchestrator,VERRA-009,Planner L1 (template + DAG),Feature,P0,3,"tax_analysis template yields step graph",VERRA-008
+0,E2 Orchestrator,VERRA-010,Router L2 (capability + model tiering),Feature,P0,3,"selects agent+model+tools; emits routing record",VERRA-009
+0,E2 Orchestrator,VERRA-011,Executor L3 (retries/backoff/timeouts/circuit breaker),Feature,P0,5,"transient failures retried; breaker opens on repeated errors",VERRA-010
+0,E2 Orchestrator,VERRA-012,Model gateway + fallback chain (primary->secondary->degraded),Feature,P0,5,"primary outage falls through; every hop logged",VERRA-011
+0,E2 Orchestrator,VERRA-013,Critic L4 (grounding/citation/schema/confidence),Feature,P0,3,"low-confidence routes to approval gate",VERRA-012
+0,E3 Guardrails,VERRA-014,Input guardrails (schema+PII/DLP+injection),Feature,P0,5,"PII redacted; injection sample blocked",VERRA-007
+0,E3 Guardrails,VERRA-015,Output guardrails + citation enforcement,Feature,P0,3,"uncited figure blocked/flagged",VERRA-013
+0,E3 Guardrails,VERRA-016,Human-in-the-loop approval gate (+resume),Feature,P0,5,"consequential action waits for approve/reject",VERRA-008
+0,E3 Guardrails,VERRA-017,Immutable hash-chained audit log + receipts,Feature,P0,5,"every action writes tamper-evident event",VERRA-008
+0,E4 Cost/Token,VERRA-018,Budget envelope + token accounting + caps,Feature,P0,3,"run over budget paused; cost attributed",VERRA-011
+0,E4 Cost/Token,VERRA-019,Prompt + semantic cache,Feature,P1,3,"repeat request served from cache",VERRA-018
+0,E9 Eval/Test,VERRA-020,Eval harness + first golden set (US tax),Feature,P0,5,"CI eval job gates on regression",VERRA-002
+0,E10 Security,VERRA-021,Secrets mgmt + dependency/secret scanning in CI,Chore,P0,3,"no secrets in repo; scans pass",VERRA-002
+1,E5 Ingestion/RAG,VERRA-022,Document upload + OCR/parse + confidence,Feature,P0,5,"1040 parsed with page refs + confidence",VERRA-005
+1,E5 Ingestion/RAG,VERRA-023,Chunk+embed into pgvector + retrieval/rerank,Feature,P0,5,"grounded answer cites source page",VERRA-022
+1,E6 Tax MVP,VERRA-024,Deterministic tax calculators (brackets/thresholds),Feature,P0,5,"figures match fixtures; used by agent not LLM",VERRA-005
+1,E6 Tax MVP,VERRA-025,Tax-analysis agent (position + opportunities),Feature,P0,8,"returns cited opportunities w/ quantified impact",VERRA-023
+1,E6 Tax MVP,VERRA-026,Scenario modeling + side-by-side compare,Feature,P0,5,"Roth scenario stays in-bracket; compares outcomes",VERRA-024
+1,E6 Tax MVP,VERRA-027,Client-ready letter + interactive report (post-approval),Feature,P0,5,"output generated only after approval; logged",VERRA-016
+1,E7 Web,VERRA-028,Design system package (tokens->components),Feature,P0,5,"Button/Card/KpiTile from tokens; no hardcoded colors",VERRA-001
+1,E7 Web,VERRA-029,Workspace shell + assistant + tax view (from prototype),Feature,P0,8,"matches prototype; calls orchestrator API",VERRA-028
+1,E7 Web,VERRA-030,Approval inbox + audit-log viewer,Feature,P1,5,"approve/reject from UI; receipts visible",VERRA-027

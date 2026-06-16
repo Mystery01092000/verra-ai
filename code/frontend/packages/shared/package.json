@@ -1,0 +1,2 @@
+{ "name": "@verra/shared", "version": "0.0.0", "type": "module", "main": "src/index.ts",
+  "scripts": { "typecheck": "tsc --noEmit", "lint": "eslint src", "test": "echo no-tests" } }

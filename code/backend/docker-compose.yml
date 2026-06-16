@@ -1,0 +1,27 @@
+# Backend dev: data plane + microservices (ADR-0007/0008/0017). `docker compose up -d`.
+name: verra-backend
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment: { POSTGRES_USER: verra, POSTGRES_PASSWORD: verra, POSTGRES_DB: verra }
+    ports: ["5432:5432"]
+    volumes:
+      - pg:/var/lib/postgresql/data
+      - ./infra/db/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+  redis: { image: redis:7-alpine, ports: ["6379:6379"] }
+  minio:
+    image: minio/minio
+    command: server /data --console-address ":9001"
+    environment: { MINIO_ROOT_USER: verra, MINIO_ROOT_PASSWORD: verra-secret }
+    ports: ["9000:9000", "9001:9001"]
+    volumes: ["minio:/data"]
+
+  gateway:       { build: ./services/gateway,       ports: ["8080:8080"], depends_on: [orchestrator] }
+  orchestrator:  { build: ./services/orchestrator,  ports: ["8081:8081"], depends_on: [postgres, redis, guardrails, model_gateway, registry, audit] }
+  model_gateway: { build: ./services/model_gateway, ports: ["8082:8082"] }
+  guardrails:    { build: ./services/guardrails,    ports: ["8084:8084"] }
+  registry:      { build: ./services/registry,      ports: ["8085:8085"], depends_on: [postgres] }
+  audit:         { build: ./services/audit,         ports: ["8086:8086"], depends_on: [postgres] }
+  ingestion:     { build: ./services/ingestion,     ports: ["8087:8087"], depends_on: [postgres] }
+volumes: { pg: {}, minio: {} }
+# NOTE: Temporal + OTel collector added with the durable-workflow + observability stories.

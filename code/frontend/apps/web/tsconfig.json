@@ -1,0 +1,1 @@
+{ "extends": "../../tsconfig.base.json", "compilerOptions": { "jsx": "preserve", "lib": ["DOM","ES2022"] }, "include": ["app","next-env.d.ts"] }

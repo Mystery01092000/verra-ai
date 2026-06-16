@@ -1,0 +1,164 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1480" height="1100" viewBox="0 0 1480 1100" font-family="Arial, Helvetica, sans-serif">
+  <rect width="1480" height="1100" fill="#FBFAFF"/>
+  <!-- title -->
+  <text x="40" y="48" font-size="30" font-weight="bold" fill="#111114">Verra Agent Orchestrator — Production Architecture</text>
+  <text x="40" y="76" font-size="17" fill="#5B5B66">One guardrailed orchestration service behind every module · multi-layer · fallbacks · cost &amp; token control</text>
+
+  <!-- defs -->
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#8A8A95"/></marker>
+  </defs>
+
+  <!-- CLIENTS ROW -->
+  <text x="40" y="118" font-size="14" font-weight="bold" fill="#8A8A95" letter-spacing="1">MODULE CLIENTS (callers)</text>
+  <g>
+    <rect x="40"  y="130" width="262" height="58" rx="12" fill="#E6E8FF" stroke="#5566FF"/>
+    <rect x="324" y="130" width="262" height="58" rx="12" fill="#E6E8FF" stroke="#5566FF"/>
+    <rect x="608" y="130" width="262" height="58" rx="12" fill="#E6E8FF" stroke="#5566FF"/>
+    <rect x="892" y="130" width="262" height="58" rx="12" fill="#E6E8FF" stroke="#5566FF"/>
+    <rect x="1176" y="130" width="264" height="58" rx="12" fill="#E6E8FF" stroke="#5566FF"/>
+    <text x="171" y="165" font-size="17" font-weight="bold" fill="#3A33C9" text-anchor="middle">Tax</text>
+    <text x="455" y="165" font-size="17" font-weight="bold" fill="#3A33C9" text-anchor="middle">Books &amp; Close</text>
+    <text x="739" y="165" font-size="17" font-weight="bold" fill="#3A33C9" text-anchor="middle">Audit</text>
+    <text x="1023" y="165" font-size="17" font-weight="bold" fill="#3A33C9" text-anchor="middle">Compliance</text>
+    <text x="1308" y="165" font-size="17" font-weight="bold" fill="#3A33C9" text-anchor="middle">Assistant</text>
+  </g>
+  <line x1="740" y1="188" x2="740" y2="214" stroke="#8A8A95" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- GATEWAY -->
+  <rect x="40" y="214" width="1400" height="60" rx="12" fill="#111114"/>
+  <text x="740" y="244" font-size="18" font-weight="bold" fill="#FFFFFF" text-anchor="middle">API Gateway &amp; Orchestration Service</text>
+  <text x="740" y="263" font-size="13" fill="#C9CBE8" text-anchor="middle">AuthN/Z · tenant isolation · rate limiting · idempotency keys · request schema · streaming (SSE)</text>
+  <line x1="740" y1="274" x2="740" y2="298" stroke="#8A8A95" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- LEFT: GUARDRAILS -->
+  <rect x="40" y="300" width="250" height="470" rx="14" fill="#FFFFFF" stroke="#E5484D" stroke-width="2"/>
+  <rect x="40" y="300" width="250" height="40" rx="14" fill="#FCE9E9"/>
+  <text x="165" y="326" font-size="16" font-weight="bold" fill="#B5292E" text-anchor="middle">GUARDRAILS</text>
+  <g font-size="13.5" fill="#3A3340">
+    <text x="58" y="368">• Input validation &amp; schema</text>
+    <text x="58" y="396">• PII / DLP redaction</text>
+    <text x="58" y="424">• Prompt-injection &amp;</text>
+    <text x="72" y="442">jailbreak defense</text>
+    <text x="58" y="470">• Policy engine (OPA-style)</text>
+    <text x="58" y="498">• Output validation &amp;</text>
+    <text x="72" y="516">citation enforcement</text>
+    <text x="58" y="544">• Content / toxicity filter</text>
+    <text x="58" y="572">• Human-in-the-loop</text>
+    <text x="72" y="590">approval gates</text>
+    <text x="58" y="618">• Action receipts</text>
+    <text x="58" y="646">• Per-jurisdiction rules</text>
+    <text x="58" y="690" font-style="italic" fill="#8A8A95">Runs on every</text>
+    <text x="58" y="710" font-style="italic" fill="#8A8A95">request &amp; response</text>
+  </g>
+
+  <!-- CENTER: ORCHESTRATOR CORE (4 layers) -->
+  <rect x="306" y="300" width="868" height="470" rx="16" fill="#FFFFFF" stroke="#5566FF" stroke-width="2.5"/>
+  <text x="740" y="330" font-size="17" font-weight="bold" fill="#3A33C9" text-anchor="middle">MULTI-LAYER ORCHESTRATOR CORE  (Supervisor / Controller)</text>
+
+  <!-- L1 -->
+  <rect x="330" y="346" width="820" height="92" rx="12" fill="#F4F4FF" stroke="#C9CDF6"/>
+  <text x="348" y="372" font-size="15" font-weight="bold" fill="#111114">L1 · Planner / Decomposer</text>
+  <text x="348" y="396" font-size="13" fill="#5B5B66">Intent → task graph (DAG) · clarify · pick plan template · pre-flight policy &amp; budget check</text>
+  <text x="348" y="418" font-size="13" fill="#5B5B66">Deterministic plan cache for known workflows (tax analysis, close, audit tie-out)</text>
+
+  <!-- L2 -->
+  <rect x="330" y="448" width="820" height="92" rx="12" fill="#EFF0FE" stroke="#C9CDF6"/>
+  <text x="348" y="474" font-size="15" font-weight="bold" fill="#111114">L2 · Router / Policy</text>
+  <text x="348" y="498" font-size="13" fill="#5B5B66">Selects agent + model tier + tools · capability match · cost/latency/quality-aware routing</text>
+  <text x="348" y="520" font-size="13" fill="#5B5B66">Budget-aware model tiering (small model first, escalate only if needed)</text>
+
+  <!-- L3 -->
+  <rect x="330" y="550" width="820" height="92" rx="12" fill="#EAEBFE" stroke="#C9CDF6"/>
+  <text x="348" y="576" font-size="15" font-weight="bold" fill="#111114">L3 · Executor</text>
+  <text x="348" y="600" font-size="13" fill="#5B5B66">Runs steps &amp; tool calls · parallelism · retries w/ backoff · timeouts · circuit breakers</text>
+  <text x="348" y="622" font-size="13" fill="#5B5B66">Durable workflow engine (checkpoint / resume) for long-running, multi-step jobs</text>
+
+  <!-- L4 -->
+  <rect x="330" y="652" width="820" height="92" rx="12" fill="#E4E6FF" stroke="#C9CDF6"/>
+  <text x="348" y="678" font-size="15" font-weight="bold" fill="#111114">L4 · Critic / Verifier</text>
+  <text x="348" y="702" font-size="13" fill="#5B5B66">Self-check &amp; eval · citation/grounding verification · schema validation · confidence scoring</text>
+  <text x="348" y="724" font-size="13" fill="#5B5B66">Routes low-confidence / consequential actions to human approval gate</text>
+
+  <!-- RIGHT: COST/TOKEN + OBSERVABILITY -->
+  <rect x="1190" y="300" width="250" height="225" rx="14" fill="#FFFFFF" stroke="#E5A33B" stroke-width="2"/>
+  <rect x="1190" y="300" width="250" height="40" rx="14" fill="#FBF0DC"/>
+  <text x="1315" y="326" font-size="15" font-weight="bold" fill="#9A6A15" text-anchor="middle">COST &amp; TOKEN MGR</text>
+  <g font-size="13" fill="#3A3340">
+    <text x="1206" y="364">• Per-tenant/req budgets</text>
+    <text x="1206" y="388">• Token accounting &amp; caps</text>
+    <text x="1206" y="412">• Context-window budgeting</text>
+    <text x="1206" y="436">• Prompt compression / trim</text>
+    <text x="1206" y="460">• Semantic + prompt cache</text>
+    <text x="1206" y="484">• Cost attribution / showback</text>
+    <text x="1206" y="508">• Quotas &amp; kill-switch</text>
+  </g>
+  <rect x="1190" y="540" width="250" height="230" rx="14" fill="#FFFFFF" stroke="#1FBF75" stroke-width="2"/>
+  <rect x="1190" y="540" width="250" height="40" rx="14" fill="#E2F6EE"/>
+  <text x="1315" y="566" font-size="15" font-weight="bold" fill="#0d8f57" text-anchor="middle">OBSERVABILITY</text>
+  <g font-size="13" fill="#3A3340">
+    <text x="1206" y="604">• Distributed tracing (OTel)</text>
+    <text x="1206" y="628">• Metrics &amp; dashboards</text>
+    <text x="1206" y="652">• Structured logs</text>
+    <text x="1206" y="676">• Online + offline evals</text>
+    <text x="1206" y="700">• Trace replay &amp; debug</text>
+    <text x="1206" y="724">• Alerting / SLO burn</text>
+    <text x="1206" y="748">• Drift &amp; quality monitors</text>
+  </g>
+
+  <!-- arrows core -> shared -->
+  <line x1="740" y1="770" x2="740" y2="800" stroke="#8A8A95" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- SHARED SERVICES ROW -->
+  <text x="40" y="796" font-size="14" font-weight="bold" fill="#8A8A95" letter-spacing="1">SHARED PLATFORM SERVICES</text>
+  <g>
+    <rect x="40" y="804" width="262" height="96" rx="12" fill="#FFFFFF" stroke="#C9CDF6" stroke-width="1.5"/>
+    <text x="171" y="832" font-size="15" font-weight="bold" fill="#111114" text-anchor="middle">Agent Registry</text>
+    <text x="171" y="856" font-size="12.5" fill="#5B5B66" text-anchor="middle">versioned manifests,</text>
+    <text x="171" y="874" font-size="12.5" fill="#5B5B66" text-anchor="middle">capabilities, lifecycle</text>
+
+    <rect x="324" y="804" width="262" height="96" rx="12" fill="#FFFFFF" stroke="#C9CDF6" stroke-width="1.5"/>
+    <text x="455" y="832" font-size="15" font-weight="bold" fill="#111114" text-anchor="middle">Tool Registry (MCP)</text>
+    <text x="455" y="856" font-size="12.5" fill="#5B5B66" text-anchor="middle">schemas, permissions,</text>
+    <text x="455" y="874" font-size="12.5" fill="#5B5B66" text-anchor="middle">sandboxed execution</text>
+
+    <rect x="608" y="804" width="262" height="96" rx="12" fill="#111114"/>
+    <text x="739" y="832" font-size="15" font-weight="bold" fill="#FFFFFF" text-anchor="middle">Model Gateway</text>
+    <text x="739" y="856" font-size="12.5" fill="#C9CBE8" text-anchor="middle">provider abstraction,</text>
+    <text x="739" y="874" font-size="12.5" fill="#C9CBE8" text-anchor="middle">fallback chains, hedging</text>
+
+    <rect x="892" y="804" width="262" height="96" rx="12" fill="#FFFFFF" stroke="#C9CDF6" stroke-width="1.5"/>
+    <text x="1023" y="832" font-size="15" font-weight="bold" fill="#111114" text-anchor="middle">Memory &amp; RAG</text>
+    <text x="1023" y="856" font-size="12.5" fill="#5B5B66" text-anchor="middle">session + long-term,</text>
+    <text x="1023" y="874" font-size="12.5" fill="#5B5B66" text-anchor="middle">vector store, grounding</text>
+
+    <rect x="1176" y="804" width="264" height="96" rx="12" fill="#FFFFFF" stroke="#C9CDF6" stroke-width="1.5"/>
+    <text x="1308" y="832" font-size="15" font-weight="bold" fill="#111114" text-anchor="middle">State &amp; Audit Log</text>
+    <text x="1308" y="856" font-size="12.5" fill="#5B5B66" text-anchor="middle">durable state, immutable</text>
+    <text x="1308" y="874" font-size="12.5" fill="#5B5B66" text-anchor="middle">audit trail, receipts</text>
+  </g>
+  <line x1="739" y1="900" x2="739" y2="928" stroke="#8A8A95" stroke-width="2" marker-end="url(#arr)"/>
+
+  <!-- PROVIDERS / FALLBACK -->
+  <text x="40" y="924" font-size="14" font-weight="bold" fill="#8A8A95" letter-spacing="1">MODEL PROVIDERS — FALLBACK CHAIN  (per request, budget &amp; health aware)</text>
+  <g>
+    <rect x="40" y="936" width="300" height="64" rx="12" fill="#E6E8FF" stroke="#5566FF"/>
+    <text x="190" y="964" font-size="14.5" font-weight="bold" fill="#3A33C9" text-anchor="middle">Primary</text>
+    <text x="190" y="985" font-size="12.5" fill="#5B5B66" text-anchor="middle">Anthropic Claude (tiered)</text>
+    <text x="356" y="974" font-size="22" fill="#8A8A95">→</text>
+    <rect x="376" y="936" width="300" height="64" rx="12" fill="#F1F1FB" stroke="#C9CDF6"/>
+    <text x="526" y="964" font-size="14.5" font-weight="bold" fill="#111114" text-anchor="middle">Secondary</text>
+    <text x="526" y="985" font-size="12.5" fill="#5B5B66" text-anchor="middle">Alt frontier provider</text>
+    <text x="692" y="974" font-size="22" fill="#8A8A95">→</text>
+    <rect x="712" y="936" width="300" height="64" rx="12" fill="#F1F1FB" stroke="#C9CDF6"/>
+    <text x="862" y="964" font-size="14.5" font-weight="bold" fill="#111114" text-anchor="middle">Fallback</text>
+    <text x="862" y="985" font-size="12.5" fill="#5B5B66" text-anchor="middle">Self-hosted open model</text>
+    <text x="1028" y="974" font-size="22" fill="#8A8A95">→</text>
+    <rect x="1048" y="936" width="392" height="64" rx="12" fill="#FFF" stroke="#E5484D"/>
+    <text x="1244" y="964" font-size="14.5" font-weight="bold" fill="#B5292E" text-anchor="middle">Degraded / Deterministic</text>
+    <text x="1244" y="985" font-size="12.5" fill="#5B5B66" text-anchor="middle">cached answer · rules-only · queue for human</text>
+  </g>
+
+  <text x="40" y="1040" font-size="12.5" fill="#8A8A95">Data plane: Postgres (state) · Vector DB (RAG) · Object store (docs) · Queue/stream (async, backpressure) · Redis (cache/rate-limit). Multi-region, zero-retention model contracts.</text>
+  <text x="40" y="1062" font-size="12.5" fill="#8A8A95" font-style="italic">Verra concept · every consequential action passes a human approval gate and is written to the immutable audit log.</text>
+</svg>

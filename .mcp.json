@@ -1,0 +1,10 @@
+{
+  "//": "MCP connectors for this project. Figma Dev Mode MCP is a local SSE server exposed by the Figma desktop app once Dev Mode + MCP are enabled. Chrome is connected via the Claude in Chrome extension (not an MCP entry).",
+  "mcpServers": {
+    "figma": {
+      "type": "sse",
+      "url": "http://127.0.0.1:3845/sse",
+      "//": "Open Figma desktop > open the file > Dev Mode > enable MCP server. Requires a Dev/Full seat on a paid plan."
+    }
+  }
+}

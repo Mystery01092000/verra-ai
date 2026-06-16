@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1480" height="980" viewBox="0 0 1480 980" font-family="Arial, Helvetica, sans-serif">
+<rect width="1480" height="980" fill="#FBFAFF"/>
+<text x="40" y="46" font-size="28" font-weight="bold" fill="#111114">Verra — Core Data Model (ERD, simplified)</text>
+<text x="40" y="72" font-size="15" fill="#5B5B66">Every row carries tenant_id (RLS). Audit events are append-only. Keys shown are representative, not exhaustive.</text>
+<defs><marker id="a" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#8A8A95"/></marker></defs>
+<!-- helper boxes -->
+<!-- row1 -->
+<g font-size="12.5">
+<!-- Tenant -->
+<rect x="40" y="100" width="220" height="118" rx="10" fill="#fff" stroke="#5566FF" stroke-width="1.6"/>
+<rect x="40" y="100" width="220" height="30" rx="10" fill="#E6E8FF"/><text x="52" y="120" font-weight="bold" fill="#3A33C9">Tenant</text>
+<text x="52" y="150" fill="#3A3340">id (PK)</text><text x="52" y="170" fill="#5B5B66">type firm|company|individual</text><text x="52" y="190" fill="#5B5B66">jurisdictions, settings, branding</text>
+<!-- User -->
+<rect x="300" y="100" width="220" height="118" rx="10" fill="#fff" stroke="#C9CDF6" stroke-width="1.4"/>
+<rect x="300" y="100" width="220" height="30" rx="10" fill="#EFEFFE"/><text x="312" y="120" font-weight="bold" fill="#111114">User</text>
+<text x="312" y="150" fill="#3A3340">id (PK), tenant_id (FK)</text><text x="312" y="170" fill="#5B5B66">role, sso_subject</text><text x="312" y="190" fill="#5B5B66">permissions</text>
+<!-- Client -->
+<rect x="560" y="100" width="220" height="118" rx="10" fill="#fff" stroke="#C9CDF6" stroke-width="1.4"/>
+<rect x="560" y="100" width="220" height="30" rx="10" fill="#EFEFFE"/><text x="572" y="120" font-weight="bold" fill="#111114">Client / Entity</text>
+<text x="572" y="150" fill="#3A3340">id (PK), tenant_id (FK)</text><text x="572" y="170" fill="#5B5B66">type, jurisdiction(s)</text><text x="572" y="190" fill="#5B5B66">profile</text>
+<!-- Document -->
+<rect x="820" y="100" width="230" height="118" rx="10" fill="#fff" stroke="#C9CDF6" stroke-width="1.4"/>
+<rect x="820" y="100" width="230" height="30" rx="10" fill="#EFEFFE"/><text x="832" y="120" font-weight="bold" fill="#111114">Document</text>
+<text x="832" y="150" fill="#3A3340">id (PK), client_id (FK)</text><text x="832" y="170" fill="#5B5B66">type, source, page_refs</text><text x="832" y="190" fill="#5B5B66">parsed_fields, confidence, version</text>
+<!-- Engagement -->
+<rect x="1090" y="100" width="230" height="118" rx="10" fill="#fff" stroke="#C9CDF6" stroke-width="1.4"/>
+<rect x="1090" y="100" width="230" height="30" rx="10" fill="#EFEFFE"/><text x="1102" y="120" font-weight="bold" fill="#111114">Engagement</text>
+<text x="1102" y="150" fill="#3A3340">id (PK), client_id (FK)</text><text x="1102" y="170" fill="#5B5B66">type tax|books|audit|comp</text><text x="1102" y="190" fill="#5B5B66">status, deadlines</text>
+<!-- row2 -->
+<rect x="40" y="270" width="220" height="118" rx="10" fill="#fff" stroke="#C9CDF6" stroke-width="1.4"/>
+<rect x="40" y="270" width="220" height="30" rx="10" fill="#EFEFFE"/><text x="52" y="290" font-weight="bold" fill="#111114">TaxProfile</text>
+<text x="52" y="320" fill="#3A3340">id (PK), client_id (FK)</text><text x="52" y="340" fill="#5B5B66">tax_year, jurisdiction</text><text x="52" y="360" fill="#5B5B66">income, positions, opportunities</text>
+<rect x="300" y="270" width="220" height="118" rx="10" fill="#fff" stroke="#C9CDF6" stroke-width="1.4"/>
+<rect x="300" y="270" width="220" height="30" rx="10" fill="#EFEFFE"/><text x="312" y="290" font-weight="bold" fill="#111114">Scenario</text>
+<text x="312" y="320" fill="#3A3340">id (PK), tax_profile_id (FK)</text><text x="312" y="340" fill="#5B5B66">assumptions</text><text x="312" y="360" fill="#5B5B66">projected_outcome, recommended</text>
+<rect x="560" y="270" width="220" height="118" rx="10" fill="#fff" stroke="#C9CDF6" stroke-width="1.4"/>
+<rect x="560" y="270" width="220" height="30" rx="10" fill="#EFEFFE"/><text x="572" y="290" font-weight="bold" fill="#111114">Obligation</text>
+<text x="572" y="320" fill="#3A3340">id (PK), client_id (FK)</text><text x="572" y="340" fill="#5B5B66">jurisdiction, form, period</text><text x="572" y="360" fill="#5B5B66">due_date, status, rule_version</text>
+<!-- Run (orchestrator) -->
+<rect x="820" y="270" width="230" height="118" rx="10" fill="#fff" stroke="#5566FF" stroke-width="1.6"/>
+<rect x="820" y="270" width="230" height="30" rx="10" fill="#E6E8FF"/><text x="832" y="290" font-weight="bold" fill="#3A33C9">Run</text>
+<text x="832" y="320" fill="#3A3340">id (PK), tenant_id, engagement_id</text><text x="832" y="340" fill="#5B5B66">module, capability, status</text><text x="832" y="360" fill="#5B5B66">budget, cost, tokens, trace_id</text>
+<rect x="1090" y="270" width="230" height="118" rx="10" fill="#fff" stroke="#C9CDF6" stroke-width="1.4"/>
+<rect x="1090" y="270" width="230" height="30" rx="10" fill="#EFEFFE"/><text x="1102" y="290" font-weight="bold" fill="#111114">Plan</text>
+<text x="1102" y="320" fill="#3A3340">id (PK), run_id (FK)</text><text x="1102" y="340" fill="#5B5B66">task_graph (steps+deps)</text><text x="1102" y="360" fill="#5B5B66">template, version</text>
+<!-- row3 -->
+<rect x="820" y="440" width="230" height="118" rx="10" fill="#fff" stroke="#C9CDF6" stroke-width="1.4"/>
+<rect x="820" y="440" width="230" height="30" rx="10" fill="#EFEFFE"/><text x="832" y="460" font-weight="bold" fill="#111114">Step</text>
+<text x="832" y="490" fill="#3A3340">id (PK), run_id (FK)</text><text x="832" y="510" fill="#5B5B66">agent, model, tools, status</text><text x="832" y="530" fill="#5B5B66">retries, tokens, cost, output_ref</text>
+<rect x="1090" y="440" width="230" height="118" rx="10" fill="#fff" stroke="#C9CDF6" stroke-width="1.4"/>
+<rect x="1090" y="440" width="230" height="30" rx="10" fill="#EFEFFE"/><text x="1102" y="460" font-weight="bold" fill="#111114">RoutingDecision</text>
+<text x="1102" y="490" fill="#3A3340">id (PK), step_id (FK)</text><text x="1102" y="510" fill="#5B5B66">chosen agent/model/tool</text><text x="1102" y="530" fill="#5B5B66">reason, fallbacks_used</text>
+<rect x="560" y="440" width="220" height="118" rx="10" fill="#fff" stroke="#C9CDF6" stroke-width="1.4"/>
+<rect x="560" y="440" width="220" height="30" rx="10" fill="#EFEFFE"/><text x="572" y="460" font-weight="bold" fill="#111114">Budget</text>
+<text x="572" y="490" fill="#3A3340">id (PK), scope</text><text x="572" y="510" fill="#5B5B66">tenant|module|run</text><text x="572" y="530" fill="#5B5B66">limits, consumed, period</text>
+<!-- registries -->
+<rect x="40" y="440" width="220" height="118" rx="10" fill="#fff" stroke="#C9CDF6" stroke-width="1.4"/>
+<rect x="40" y="440" width="220" height="30" rx="10" fill="#EFEFFE"/><text x="52" y="460" font-weight="bold" fill="#111114">AgentVersion</text>
+<text x="52" y="490" fill="#3A3340">id (PK), version</text><text x="52" y="510" fill="#5B5B66">manifest, capabilities</text><text x="52" y="530" fill="#5B5B66">eval_status, lifecycle</text>
+<rect x="300" y="440" width="220" height="118" rx="10" fill="#fff" stroke="#C9CDF6" stroke-width="1.4"/>
+<rect x="300" y="440" width="220" height="30" rx="10" fill="#EFEFFE"/><text x="312" y="460" font-weight="bold" fill="#111114">ToolDef</text>
+<text x="312" y="490" fill="#3A3340">id (PK), version</text><text x="312" y="510" fill="#5B5B66">json_schema, permissions</text><text x="312" y="530" fill="#5B5B66">sandbox_profile</text>
+<!-- audit -->
+<rect x="820" y="610" width="500" height="110" rx="10" fill="#111114"/>
+<text x="840" y="640" font-weight="bold" fill="#fff" font-size="14">AuditEvent  (append-only, tamper-evident)</text>
+<text x="840" y="666" fill="#C9CBE8">id (PK), tenant_id, run_id (FK), actor, action</text>
+<text x="840" y="688" fill="#C9CBE8">sources[], provider, cost, tokens, approval, prev_hash, hash</text>
+<text x="840" y="710" fill="#9aa0e6">rollback_handle</text>
+</g>
+<!-- relations -->
+<g stroke="#8A8A95" stroke-width="1.4" fill="none">
+<line x1="260" y1="159" x2="300" y2="159" marker-end="url(#a)"/>
+<line x1="520" y1="159" x2="560" y2="159" marker-end="url(#a)"/>
+<line x1="780" y1="159" x2="820" y2="159" marker-end="url(#a)"/>
+<line x1="670" y1="218" x2="670" y2="270" marker-end="url(#a)"/>
+<line x1="150" y1="218" x2="150" y2="270" marker-end="url(#a)"/>
+<line x1="935" y1="218" x2="935" y2="270" marker-end="url(#a)"/>
+<line x1="935" y1="388" x2="935" y2="440" marker-end="url(#a)"/>
+<line x1="1050" y1="329" x2="1090" y2="329" marker-end="url(#a)"/>
+<line x1="1050" y1="499" x2="1090" y2="499" marker-end="url(#a)"/>
+<line x1="935" y1="558" x2="935" y2="610" marker-end="url(#a)"/>
+</g>
+</svg>
