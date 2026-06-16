@@ -1,7 +1,7 @@
 ---
 name: verra-design-system
 description: >
-  Build Verra UI (web app, marketing, or Figma) that matches the hazel.ai-modeled look. Use when
+  Build Verra UI (web app, marketing, or Figma) that matches the ideation-modeled look. Use when
   creating or editing any screen, component, or style for Verra. Enforces the design tokens.
 ---
 
@@ -22,7 +22,7 @@ Buttons (black pill / solid-periwinkle CTA / ghost), assistant card + mode chips
 nav item, KPI tile, feed/list row, table, tag/pill (live/due/warn/info), calendar cell,
 glass insight card, stepper.
 
-## Layout patterns (from hazel.ai)
+## Layout patterns (from ideation)
 - Marketing: floating **left vertical nav**, dreamy **sky-gradient hero** with faint grid + rotating
   word, white glassy assistant card, cream "transform your practice" section with tab row +
   product window, indigo **stats band**, **tax dashboard** (KPI tiles + donut + glass insight cards),

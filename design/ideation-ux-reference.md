@@ -1,4 +1,4 @@
-# hazel.ai — UX reference (captured from live screenshots, June 2026)
+# ideation — UX reference (captured from live screenshots, June 2026)
 
 Pages reviewed: Home/Features, Tax Planning, Security, Pricing.
 
@@ -10,12 +10,12 @@ Pages reviewed: Home/Features, Tax Planning, Security, Pricing.
 - **Body:** Inter / system; text `#111`.
 - **Pricing card titles:** a **serif** face (mixed with the grotesque).
 - **Buttons:** black `#111` pill ("Start 14-day free trial"); solid periwinkle pricing CTAs;
-  white-on-dark on dark hero; black "Ask Hazel" sparkle button in-app.
+  white-on-dark on dark hero; black "Ask Ideation" sparkle button in-app.
 - **Layout:** floating **left vertical nav** (Features/Security/Tax Planning/Pricing);
   "Powered by altruist" bottom-left; white glassy cards; soft shadows; generous whitespace.
 
 ## Product UI (in-app)
-- **"Your day, prioritized"** feed: date, "All" dropdown, black "Ask Hazel" sparkle, meeting rows with
+- **"Your day, prioritized"** feed: date, "All" dropdown, black "Ask Ideation" sparkle, meeting rows with
   calendar icon + time + status tags ("Happening now" green dot, "High net worth"), "View meeting prep".
 - **Tax dashboard:** KPI tiles (Total Federal Tax, Marginal Bracket, Effective Rate), "Income Breakdown"
   white card with a green donut + Source/Amount table; indigo **glass insight cards** on the right.

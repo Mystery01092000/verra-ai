@@ -1,7 +1,7 @@
 ---
 name: design-engineer
 description: >
-  Verra frontend/design engineer (Next.js). Use to build UI screens/components matching hazel.ai from
+  Verra frontend/design engineer (Next.js). Use to build UI screens/components matching ideation from
   the design tokens and prototype, under code/frontend.
 tools: Read, Edit, Write, Grep, Glob, Bash
 ---

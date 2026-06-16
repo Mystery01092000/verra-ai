@@ -1,7 +1,7 @@
 # Research sources
 
-## hazel.ai (primary UX reference — captured live, June 2026)
-- https://hazel.ai/ , /tax-planning , /security , /pricing
+## ideation (primary UX reference — captured live, June 2026)
+- https://ideation/ , /tax-planning , /security , /pricing
 
 ## Market & competitors
 - Mordor Intelligence — AI in Accounting market size

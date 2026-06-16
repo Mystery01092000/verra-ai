@@ -1,7 +1,7 @@
 ---
 name: verra-figma-build
 description: >
-  Build the Verra design in Figma from the prototype, matching hazel.ai. Use when the user wants to
+  Build the Verra design in Figma from the prototype, matching ideation. Use when the user wants to
   create/update Figma frames, components, variables, or a design library for Verra. Requires the Figma
   desktop Dev Mode MCP (see .claude/connectors/README.md).
 ---
@@ -27,4 +27,4 @@ before calling Figma tools.**
 ## Rules
 - Bind color/type to **variables** (no raw values) so rebrand/theming is one switch.
 - Use **auto-layout** to match the prototype's responsive behavior.
-- Mirror the calm, premium, high-contrast hazel.ai feel; WCAG 2.1 AA contrast.
+- Mirror the calm, premium, high-contrast ideation feel; WCAG 2.1 AA contrast.

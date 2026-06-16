@@ -3,7 +3,7 @@
 Verra is a concept for an **AI engine across accounting, tax, audit & compliance**, delivered as a
 **multi-tenant** platform (firms · companies · individuals) for **multiple jurisdictions**
 (US is the MVP; UK and India next). The **MVP focus is Tax** (planning + filing preparation).
-The UI/UX is modeled on **hazel.ai**.
+The UI/UX is modeled on **ideation**.
 
 ## Non-negotiable product principles (apply to all code, copy, and designs)
 - **Human-in-the-loop:** AI prepares; a licensed human approves anything sent, filed, or relied upon.
