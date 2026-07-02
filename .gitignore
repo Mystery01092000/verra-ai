@@ -3,6 +3,8 @@ node_modules/
 dist/
 .next/
 .turbo/
+next-env.d.ts
+*.tsbuildinfo
 # python
 __pycache__/
 *.pyc
@@ -14,5 +16,9 @@ __pycache__/
 .env
 .env.*
 !*.example
+# dev-only flat-file user store (contains password hashes)
+code/frontend/apps/web/.users.json
 *.log
 .DS_Store
+# tooling artifacts
+.observer.lock
