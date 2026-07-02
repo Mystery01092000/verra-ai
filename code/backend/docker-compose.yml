@@ -16,12 +16,120 @@ services:
     ports: ["9000:9000", "9001:9001"]
     volumes: ["minio:/data"]
 
-  gateway:       { build: ./services/gateway,       ports: ["8080:8080"], depends_on: [orchestrator] }
-  orchestrator:  { build: ./services/orchestrator,  ports: ["8081:8081"], depends_on: [postgres, redis, guardrails, model_gateway, registry, audit] }
-  model_gateway: { build: ./services/model_gateway, ports: ["8082:8082"] }
-  guardrails:    { build: ./services/guardrails,    ports: ["8084:8084"] }
-  registry:      { build: ./services/registry,      ports: ["8085:8085"], depends_on: [postgres] }
-  audit:         { build: ./services/audit,         ports: ["8086:8086"], depends_on: [postgres] }
-  ingestion:     { build: ./services/ingestion,     ports: ["8087:8087"], depends_on: [postgres] }
-volumes: { pg: {}, minio: {} }
-# NOTE: Temporal + OTel collector added with the durable-workflow + observability stories.
+  temporal:
+    image: temporalio/auto-setup:1.25
+    environment:
+      DB: postgres12
+      DB_PORT: 5432
+      POSTGRES_USER: verra
+      POSTGRES_PWD: verra
+      POSTGRES_SEEDS: postgres
+      DYNAMIC_CONFIG_FILE_PATH: config/dynamicconfig/development-sql.yaml
+    ports: ["7233:7233"]
+    depends_on: [postgres]
+  temporal-ui:
+    image: temporalio/ui:2.31
+    environment: { TEMPORAL_ADDRESS: temporal:7233 }
+    ports: ["8233:8080"]
+    depends_on: [temporal]
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.111
+    command: ["--config", "/etc/otel-collector-config.yaml"]
+    volumes:
+      - ./infra/otel/otel-collector-config.yaml:/etc/otel-collector-config.yaml:ro
+    ports: ["4317:4317", "4318:4318"]
+
+  gateway:
+    build: { context: ., dockerfile: services/gateway/Dockerfile }
+    ports: ["8080:8080"]
+    depends_on: [orchestrator]
+    environment:
+      ENVIRONMENT: ${ENVIRONMENT:-development}
+      PROMETHEUS_MULTIPROC_DIR: /tmp/prometheus_multiproc
+      HOLDINGS_URL: http://holdings:8083
+
+  orchestrator:
+    build: { context: ., dockerfile: services/orchestrator/Dockerfile }
+    ports: ["8081:8081"]
+    depends_on: [postgres, redis, temporal, guardrails, model_gateway, registry, audit]
+    environment:
+      ENVIRONMENT: ${ENVIRONMENT:-development}
+      PROMETHEUS_MULTIPROC_DIR: /tmp/prometheus_multiproc
+      TEMPORAL_HOST: temporal:7233
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-collector:4317
+      GUARDRAILS_URL: http://guardrails:8084
+      MODEL_GATEWAY_URL: http://model_gateway:8082
+      REGISTRY_URL: http://registry:8085
+      AUDIT_URL: http://audit:8086
+      INGESTION_URL: http://ingestion:8087
+      HOLDINGS_URL: http://holdings:8083
+      REDIS_URL: redis://redis:6379
+
+  model_gateway:
+    build: { context: ., dockerfile: services/model_gateway/Dockerfile }
+    ports: ["8082:8082"]
+    environment:
+      ENVIRONMENT: ${ENVIRONMENT:-development}
+      PROMETHEUS_MULTIPROC_DIR: /tmp/prometheus_multiproc
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-collector:4317
+      # AWS Bedrock — bearer token takes priority; falls back to key+secret(+session token)
+      AWS_BEARER_TOKEN_BEDROCK: ${AWS_BEARER_TOKEN_BEDROCK:-}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID:-${AWS_ACCESS_KEY:-}}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY:-${AWS_SECRET_KEY:-}}
+      AWS_SESSION_TOKEN: ${AWS_SESSION_TOKEN:-${AWS_ACCESS_TOKEN:-}}
+      AWS_REGION: ${AWS_REGION:-us-east-1}
+      # OpenAI (fallback)
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+
+  guardrails:
+    build: { context: ., dockerfile: services/guardrails/Dockerfile }
+    ports: ["8084:8084"]
+    environment:
+      ENVIRONMENT: ${ENVIRONMENT:-development}
+      PROMETHEUS_MULTIPROC_DIR: /tmp/prometheus_multiproc
+
+  registry:
+    build: { context: ., dockerfile: services/registry/Dockerfile }
+    ports: ["8085:8085"]
+    depends_on: [postgres]
+    environment:
+      ENVIRONMENT: ${ENVIRONMENT:-development}
+      PROMETHEUS_MULTIPROC_DIR: /tmp/prometheus_multiproc
+      DATABASE_URL: postgresql://verra:verra@postgres:5432/verra
+      REDIS_URL: redis://redis:6379
+
+  audit:
+    build: { context: ., dockerfile: services/audit/Dockerfile }
+    ports: ["8086:8086"]
+    depends_on: [postgres]
+    environment:
+      ENVIRONMENT: ${ENVIRONMENT:-development}
+      PROMETHEUS_MULTIPROC_DIR: /tmp/prometheus_multiproc
+      DATABASE_URL: postgresql://verra:verra@postgres:5432/verra
+      REDIS_URL: redis://redis:6379
+
+  holdings:
+    build: { context: ., dockerfile: services/holdings/Dockerfile }
+    ports: ["8083:8083"]
+    environment:
+      ENVIRONMENT: ${ENVIRONMENT:-development}
+      PROMETHEUS_MULTIPROC_DIR: /tmp/prometheus_multiproc
+      HOLDINGS_STORE_PATH: /data/holdings.jsonl
+    volumes: ["holdings:/data"]
+
+  ingestion:
+    build: { context: ., dockerfile: services/ingestion/Dockerfile }
+    ports: ["8087:8087"]
+    depends_on: [postgres]
+    environment:
+      ENVIRONMENT: ${ENVIRONMENT:-development}
+      PROMETHEUS_MULTIPROC_DIR: /tmp/prometheus_multiproc
+      DATABASE_URL: postgresql://verra:verra@postgres:5432/verra
+      REDIS_URL: redis://redis:6379
+      MINIO_URL: http://minio:9000
+      MINIO_ACCESS_KEY: ${MINIO_ROOT_USER:-verra}
+      MINIO_SECRET_KEY: ${MINIO_ROOT_PASSWORD:-verra-secret}
+
+volumes: { pg: {}, minio: {}, holdings: {} }
+# Temporal + OTel collector added for durable workflows and observability (ADR-0005/0012).

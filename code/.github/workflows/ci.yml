@@ -21,9 +21,19 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: { python-version: "3.12" }
-      - run: pip install ruff mypy pytest
+      - run: pip install ruff mypy pytest fastapi "uvicorn[standard]" pydantic pydantic-settings httpx anyio trio
+      - run: pip install -e ./packages/py_shared
       - run: ruff check .
-      - run: pytest -q || echo "no tests yet"
+      - name: mypy
+        run: |
+          for d in services/*/ packages/py_shared/; do
+            MYPYPATH="$d:packages/py_shared" mypy "$d"
+          done
+      - name: pytest
+        run: |
+          for d in services/*/ packages/py_shared/; do
+            PYTHONPATH="$d:packages/py_shared" pytest -q "$d"
+          done
   evals:
     runs-on: ubuntu-latest
     steps:

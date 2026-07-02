@@ -1,8 +1,14 @@
 [project]
 name = "verra-shared"
-version = "0.0.0"
+version = "0.2.0"
 requires-python = ">=3.12"
-dependencies = ["pydantic>=2.7"]
+dependencies = [
+    "pydantic>=2.7",
+    "structlog>=24.1",
+    "prometheus-client>=0.20",
+    "redis>=5.0",
+    "starlette>=0.37",
+]
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
