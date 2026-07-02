@@ -32,7 +32,8 @@ Accounting, tax, audit and compliance work is high‑volume, deadline‑driven, 
 of error — and the people who do it are scarce. **Verra ingests a client's financial documents once,
 understands them, and turns them into prepared work across all four domains**, while a licensed professional
 approves anything consequential. It is **multi‑tenant** (firms · companies · individuals) and
-**multi‑jurisdiction** (US MVP · UK · India), with **Tax** as the lead module.
+**multi‑jurisdiction** (**India MVP — residents & NRIs** · US · UK next), with **Tax + holdings
+consolidation + financial planning** as the lead modules.
 
 The experience is calm, conversational and security‑first — a floating AI assistant, a daily briefing,
 cited answers, scenario modeling, and one‑click client‑ready outputs.
@@ -102,7 +103,7 @@ Built as **Python/FastAPI microservices** behind a single gateway, with a **Next
 
 ![Deployment](code/docs/images/deploy.png)
 
-Services: `gateway` · `orchestrator` · `model_gateway` · `ingestion` · `guardrails` · `registry` · `audit`.
+Services: `gateway` · `orchestrator` · `model_gateway` · `ingestion` · `guardrails` · `registry` · `audit` · `holdings`.
 Public traffic enters only through the gateway; services communicate over HTTP/JSON + mTLS.
 
 ## 🧰 Tech stack
@@ -127,10 +128,25 @@ Public traffic enters only through the gateway; services communicate over HTTP/J
 - **Security by design** — zero‑retention AI, RLS tenant isolation, OIDC/RBAC/mTLS, immutable audit, threat model.
 - **IaC + local dev** — `docker compose up` brings up Postgres+pgvector, Redis, MinIO and all 7 services.
 
+### Quickstart
+
 ```bash
-cd code/frontend && pnpm install        # frontend
-cd code/backend  && docker compose up -d # data plane + microservices
-make dev                                 # run everything
+# Backend — 8 FastAPI microservices (+ Postgres/pgvector, Redis, MinIO, Temporal, OTel)
+cd code/backend && docker compose up -d
+
+# Frontend — Next.js app on http://localhost:3000
+cd code/frontend && pnpm install && pnpm dev
+```
+
+Model credentials (never committed — see `code/frontend/apps/web/.env.example`): set
+`AWS_ACCESS_KEY_ID`/`AWS_SECRET_ACCESS_KEY` (Bedrock — Claude or Amazon Nova; free‑tier accounts
+work via Nova) or `ANTHROPIC_API_KEY`. Without credentials every AI surface degrades honestly
+(deterministic calculators keep working; chat shows a setup notice instead of fake answers).
+
+```bash
+# Tests — 217 backend tests + strict mypy + ruff; frontend build/typecheck/lint
+cd code/backend  && for d in services/*/ packages/py_shared/; do PYTHONPATH="$d:packages/py_shared" pytest -q "$d"; done
+cd code/frontend && pnpm build && pnpm typecheck && pnpm lint
 ```
 
 ## 🗺 Repository map
@@ -146,11 +162,31 @@ design/     Interactive prototypes · tokens · diagrams · Figma spec
 .claude/    Skills · hooks · commands · agents (project automation)
 ```
 
-## 📌 Status
+## 📌 Status — what works today (v0.2.0, verified end‑to‑end)
 
-Implementation‑ready: product + UX, committed architecture (ADRs), full system design, a working
-microservice scaffold, CI/CD, infra skeleton, test/eval strategy, and a Sprint‑0 backlog. Remaining
-external step: build the Figma file from the spec.
+Everything below runs live and was verified in‑browser against real Bedrock models
+(see [`docs/Verra_Implementation_Summary.md`](docs/Verra_Implementation_Summary.md)):
+
+- **Deterministic India tax engine (AY 2025‑26):** liability (slabs · 87A · surcharge · cess),
+  old‑vs‑new regime comparison, HRA/LTA exemptions, Form 16↔26AS↔AIS TDS reconciliation,
+  advance tax (234B/234C) — every figure cited to its section.
+- **Chat agent** with modes (Ask · Tax planner · Portfolio · NRI taxes · Financial planning),
+  regulator‑aware prompts (Income‑tax Act · SEBI · FEMA/RBI · IRDAI), attach‑a‑document
+  grounding, provider/model captions, and CSV exports.
+- **Holdings consolidation engine:** 19 holding types (funds · deposits · insurance · loans …),
+  net worth / allocation / insurance‑adequacy analytics with honestly‑sourced advisory flags,
+  plus AI portfolio analysis grounded on a 41‑rule regulatory corpus (residents & NRIs).
+- **Document ingestion:** Form 16 / 26AS / AIS classification + field extraction with per‑field
+  confidence and human‑review gating.
+- **Trust layer:** human‑in‑the‑loop approvals inbox (financial plans are always gated),
+  SHA‑256 hash‑chained immutable audit log with one‑click chain verification, PII masking +
+  prompt‑injection guardrails.
+- **Quality gates:** 217 backend tests, strict mypy across all services, ruff, frontend
+  build/typecheck/lint, and a gateway‑only e2e smoke suite — all green in CI.
+
+Roadmap (persistence + auth, capital‑gains calculators, compliance calendar, evals in CI, more
+jurisdictions): [`docs/Verra_Platform_Plan_v2.md`](docs/Verra_Platform_Plan_v2.md). Version
+history: [`CHANGELOG.md`](CHANGELOG.md).
 
 ---
 
