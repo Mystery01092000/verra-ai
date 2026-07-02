@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;700;900&family=Fraunces:ital,opsz,wght@0,9..144,400;1,9..144,400&family=Inter:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-accent: #5566ff;
+  --color-accent-600: #4f46e5;
+  --color-accent-700: #3a33c9;
+  --color-periwinkle: #8a92ff;
+  --color-periwinkle-soft: #e6e8ff;
+  --color-ink: #111114;
+  --color-ink-secondary: #5b5b66;
+  --color-muted: #8a8a95;
+  --color-surface: #ffffff;
+  --color-cream: #f5f5f5;
+  --color-line: #e8e8ec;
+  --color-ok: #1fbf75;
+  --color-warn: #e5a33b;
+  --color-danger: #e5484d;
+  --gradient-brand: linear-gradient(135deg, #8a92ff, #4f46e5);
+  --shadow-card: 0 1px 2px rgba(17, 17, 20, 0.04), 0 12px 32px rgba(17, 17, 20, 0.06);
+  --shadow-glow: 0 0 0 1px rgba(85, 102, 255, 0.25), 0 18px 50px rgba(85, 102, 255, 0.18);
+
+  /* On-dark text — for content rendered over the sky/gradient backgrounds */
+  --color-on-dark: #ffffff;
+  --color-on-dark-strong: rgba(255, 255, 255, 0.82);
+  --color-on-dark-muted: rgba(255, 255, 255, 0.65);
+  --color-on-dark-soft: rgba(255, 255, 255, 0.6);
+  --color-on-dark-faint: rgba(255, 255, 255, 0.45);
+
+  /* Translucent overlays — hairlines and fills over light/dark surfaces */
+  --overlay-white-strong: rgba(255, 255, 255, 0.12);
+  --overlay-white: rgba(255, 255, 255, 0.1);
+  --overlay-white-soft: rgba(255, 255, 255, 0.08);
+  --overlay-white-faint: rgba(255, 255, 255, 0.07);
+  --overlay-ink-strong: rgba(0, 0, 0, 0.06);
+  --overlay-ink: rgba(0, 0, 0, 0.05);
+  --overlay-ink-soft: rgba(0, 0, 0, 0.04);
+  --overlay-accent-soft: rgba(85, 102, 255, 0.05);
+
+  /* Chat-surface shadows */
+  --shadow-bubble: 0 1px 8px rgba(0, 0, 0, 0.06);
+  --shadow-input: 0 2px 20px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  --shadow-menu: 0 4px 24px rgba(0, 0, 0, 0.12);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: transparent;
+  color: #111114;
+}
+
+/* ── Per-page backgrounds on <html> (set by PageBackground.tsx) ──────────── */
+/* Applying to html covers the full viewport including behind the sidebar.    */
+
+html {
+  background-color: #ffffff; /* fallback */
+}
+
+html.bg-page-home {
+  background:
+    /* Soft cloud shapes — large diffuse white ellipses */
+    radial-gradient(ellipse 320px 120px at 22% 16%, rgba(255, 255, 255, 0.7) 0%, transparent 72%),
+    radial-gradient(ellipse 220px 90px at 64% 9%, rgba(255, 255, 255, 0.6) 0%, transparent 72%),
+    radial-gradient(ellipse 260px 100px at 82% 22%, rgba(255, 255, 255, 0.5) 0%, transparent 72%),
+    radial-gradient(ellipse 180px 70px at 44% 5%, rgba(255, 255, 255, 0.45) 0%, transparent 72%),
+    radial-gradient(ellipse 200px 80px at 12% 33%, rgba(255, 255, 255, 0.38) 0%, transparent 72%),
+    radial-gradient(ellipse 140px 55px at 55% 19%, rgba(255, 255, 255, 0.3) 0%, transparent 72%),
+    /* Original sky gradient layers below */
+    radial-gradient(120% 80% at 20% 10%, #c9b8e8 0%, rgba(201, 184, 232, 0) 55%),
+    radial-gradient(120% 80% at 85% 5%, #f3c9c0 0%, rgba(243, 201, 192, 0) 50%),
+    radial-gradient(140% 100% at 50% 120%, #6b74e8 0%, rgba(107, 116, 232, 0) 55%),
+    linear-gradient(180deg, #aeb4ec 0%, #b8aee6 35%, #c3b6e0 60%, #9aa0e6 100%);
+}
+
+html.bg-page-chat {
+  background:
+    /* Soft cloud shapes — large diffuse white ellipses */
+    radial-gradient(ellipse 320px 120px at 22% 16%, rgba(255, 255, 255, 0.7) 0%, transparent 72%),
+    radial-gradient(ellipse 220px 90px at 64% 9%, rgba(255, 255, 255, 0.6) 0%, transparent 72%),
+    radial-gradient(ellipse 260px 100px at 82% 22%, rgba(255, 255, 255, 0.5) 0%, transparent 72%),
+    radial-gradient(ellipse 180px 70px at 44% 5%, rgba(255, 255, 255, 0.45) 0%, transparent 72%),
+    radial-gradient(ellipse 200px 80px at 12% 33%, rgba(255, 255, 255, 0.38) 0%, transparent 72%),
+    radial-gradient(ellipse 140px 55px at 55% 19%, rgba(255, 255, 255, 0.3) 0%, transparent 72%),
+    /* Original sky gradient layers below */
+    radial-gradient(120% 80% at 20% 10%, #c9b8e8 0%, rgba(201, 184, 232, 0) 55%),
+    radial-gradient(120% 80% at 85% 5%, #f3c9c0 0%, rgba(243, 201, 192, 0) 50%),
+    radial-gradient(140% 100% at 50% 120%, #6b74e8 0%, rgba(107, 116, 232, 0) 55%),
+    linear-gradient(180deg, #aeb4ec 0%, #b8aee6 35%, #c3b6e0 60%, #9aa0e6 100%);
+}
+html.bg-page-tax {
+  background-color: #f7f6f3;
+}
+html.bg-page-documents {
+  background-color: #f3f6f4;
+}
+html.bg-page-audit {
+  background-color: #f2f3f8;
+}
+
+/* ── Glass header (frosted nav bar over sky background) ─────── */
+.glass-header {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+/* ── Glass card (matches prototype .glass) ───────────────────── */
+.glass {
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.06));
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 13px;
+  padding: 14px;
+  color: #fff;
+  backdrop-filter: blur(4px);
+}

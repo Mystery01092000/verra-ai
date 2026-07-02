@@ -1,5 +1,33 @@
-{ "name": "@verra/web", "version": "0.0.0", "private": true,
-  "scripts": { "dev": "next dev", "build": "next build", "start": "next start",
-    "lint": "next lint", "typecheck": "tsc --noEmit", "test": "echo no-tests" },
-  "dependencies": { "next": "^14.2.0", "react": "^18.3.0", "react-dom": "^18.3.0", "@verra/design-system": "workspace:*" },
-  "devDependencies": { "typescript": "^5.5.0", "@types/react": "^18", "tailwindcss": "^3.4.0" } }
+{
+  "name": "@verra/web",
+  "version": "0.2.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
+    "test": "echo no-tests"
+  },
+  "dependencies": {
+    "@anthropic-ai/bedrock-sdk": "^0.31.0",
+    "@anthropic-ai/sdk": "^0.106.0",
+    "@aws-sdk/client-bedrock-runtime": "^3.1075.0",
+    "@verra/design-system": "workspace:*",
+    "next": "^14.2.0",
+    "next-auth": "^4.24.14",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@types/node": "26.0.1",
+    "@types/react": "^18",
+    "autoprefixer": "^10.4.19",
+    "tailwindcss": "^3.4.0",
+    "typescript": "^5.5.0"
+  }
+}
