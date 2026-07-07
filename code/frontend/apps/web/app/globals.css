@@ -72,7 +72,15 @@ html {
   background-color: #ffffff; /* fallback */
 }
 
-html.bg-page-home {
+/* Shared "sky" recipe: cloud ellipses over three tinted radials and a 4-stop base.
+   Each page supplies its own --sky-* palette; all palettes keep the same mid-tone
+   luminance as home so ink text and white cards stay AA-readable on every screen. */
+html.bg-page-home,
+html.bg-page-tax,
+html.bg-page-holdings,
+html.bg-page-documents,
+html.bg-page-audit,
+html.bg-page-approvals {
   background:
     /* Soft cloud shapes — large diffuse white ellipses */
     radial-gradient(ellipse 320px 120px at 22% 16%, rgba(255, 255, 255, 0.7) 0%, transparent 72%),
@@ -81,36 +89,83 @@ html.bg-page-home {
     radial-gradient(ellipse 180px 70px at 44% 5%, rgba(255, 255, 255, 0.45) 0%, transparent 72%),
     radial-gradient(ellipse 200px 80px at 12% 33%, rgba(255, 255, 255, 0.38) 0%, transparent 72%),
     radial-gradient(ellipse 140px 55px at 55% 19%, rgba(255, 255, 255, 0.3) 0%, transparent 72%),
-    /* Original sky gradient layers below */
-    radial-gradient(120% 80% at 20% 10%, #c9b8e8 0%, rgba(201, 184, 232, 0) 55%),
-    radial-gradient(120% 80% at 85% 5%, #f3c9c0 0%, rgba(243, 201, 192, 0) 50%),
-    radial-gradient(140% 100% at 50% 120%, #6b74e8 0%, rgba(107, 116, 232, 0) 55%),
-    linear-gradient(180deg, #aeb4ec 0%, #b8aee6 35%, #c3b6e0 60%, #9aa0e6 100%);
+    /* Tinted sky layers — hues come from the per-page palette */
+    radial-gradient(120% 80% at 20% 10%, var(--sky-top-left) 0%, transparent 55%),
+    radial-gradient(120% 80% at 85% 5%, var(--sky-top-right) 0%, transparent 50%),
+    radial-gradient(140% 100% at 50% 120%, var(--sky-bottom) 0%, transparent 55%),
+    linear-gradient(
+      180deg,
+      var(--sky-base-1) 0%,
+      var(--sky-base-2) 35%,
+      var(--sky-base-3) 60%,
+      var(--sky-base-4) 100%
+    );
 }
 
-html.bg-page-chat {
-  background:
-    /* Soft cloud shapes — large diffuse white ellipses */
-    radial-gradient(ellipse 320px 120px at 22% 16%, rgba(255, 255, 255, 0.7) 0%, transparent 72%),
-    radial-gradient(ellipse 220px 90px at 64% 9%, rgba(255, 255, 255, 0.6) 0%, transparent 72%),
-    radial-gradient(ellipse 260px 100px at 82% 22%, rgba(255, 255, 255, 0.5) 0%, transparent 72%),
-    radial-gradient(ellipse 180px 70px at 44% 5%, rgba(255, 255, 255, 0.45) 0%, transparent 72%),
-    radial-gradient(ellipse 200px 80px at 12% 33%, rgba(255, 255, 255, 0.38) 0%, transparent 72%),
-    radial-gradient(ellipse 140px 55px at 55% 19%, rgba(255, 255, 255, 0.3) 0%, transparent 72%),
-    /* Original sky gradient layers below */
-    radial-gradient(120% 80% at 20% 10%, #c9b8e8 0%, rgba(201, 184, 232, 0) 55%),
-    radial-gradient(120% 80% at 85% 5%, #f3c9c0 0%, rgba(243, 201, 192, 0) 50%),
-    radial-gradient(140% 100% at 50% 120%, #6b74e8 0%, rgba(107, 116, 232, 0) 55%),
-    linear-gradient(180deg, #aeb4ec 0%, #b8aee6 35%, #c3b6e0 60%, #9aa0e6 100%);
+/* Home & chat — periwinkle/lavender (the original) */
+html.bg-page-home {
+  --sky-top-left: #c9b8e8;
+  --sky-top-right: #f3c9c0;
+  --sky-bottom: #6b74e8;
+  --sky-base-1: #aeb4ec;
+  --sky-base-2: #b8aee6;
+  --sky-base-3: #c3b6e0;
+  --sky-base-4: #9aa0e6;
 }
+
+/* Tax — mint/sage */
 html.bg-page-tax {
-  background-color: #f7f6f3;
+  --sky-top-left: #b6e3cf;
+  --sky-top-right: #f0e6c0;
+  --sky-bottom: #4db892;
+  --sky-base-1: #a8dcc5;
+  --sky-base-2: #b3e0ca;
+  --sky-base-3: #c0e6d2;
+  --sky-base-4: #8fd0b4;
 }
+
+/* Holdings — warm apricot/rose */
+html.bg-page-holdings {
+  --sky-top-left: #f5d3b8;
+  --sky-top-right: #f3c0cd;
+  --sky-bottom: #e8926b;
+  --sky-base-1: #eec2ab;
+  --sky-base-2: #f0cab2;
+  --sky-base-3: #f3d6c0;
+  --sky-base-4: #e6ac92;
+}
+
+/* Documents — cool cyan/blue */
 html.bg-page-documents {
-  background-color: #f3f6f4;
+  --sky-top-left: #b8d8ee;
+  --sky-top-right: #c9e8e2;
+  --sky-bottom: #6ba6e8;
+  --sky-base-1: #aacbe8;
+  --sky-base-2: #b4d3ea;
+  --sky-base-3: #c2dcee;
+  --sky-base-4: #92bce4;
 }
+
+/* Audit — slate/steel */
 html.bg-page-audit {
-  background-color: #f2f3f8;
+  --sky-top-left: #c3c8dd;
+  --sky-top-right: #dcc9d8;
+  --sky-bottom: #7280b0;
+  --sky-base-1: #b3bacf;
+  --sky-base-2: #bcc2d4;
+  --sky-base-3: #c8cdd9;
+  --sky-base-4: #9ba4c0;
+}
+
+/* Approvals — orchid/lilac */
+html.bg-page-approvals {
+  --sky-top-left: #e3c0e0;
+  --sky-top-right: #f3d1c0;
+  --sky-bottom: #b070c8;
+  --sky-base-1: #dcb4dc;
+  --sky-base-2: #e0bce0;
+  --sky-base-3: #e6c8e4;
+  --sky-base-4: #cc9ed0;
 }
 
 /* ── Glass header (frosted nav bar over sky background) ─────── */

@@ -76,7 +76,7 @@ export function HoldingsView() {
   }
 
   return (
-    <div className="flex h-full flex-col bg-cream">
+    <div className="flex h-full flex-col">
       <header className="border-b border-line bg-white/60 px-6 py-4 backdrop-blur-sm">
         <h1 className="font-display text-lg font-black tracking-tight text-ink">Holdings</h1>
         <p className="text-xs text-muted">
