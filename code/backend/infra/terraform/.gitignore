@@ -1,0 +1,7 @@
+# Local state and workspace artifacts — never commit state (contains resource details).
+.terraform/
+.terraform.lock.hcl
+terraform.tfstate
+terraform.tfstate.*
+*.tfvars
+crash.log
