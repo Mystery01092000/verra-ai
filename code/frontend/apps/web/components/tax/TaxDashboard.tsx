@@ -200,6 +200,28 @@ export function TaxDashboard({ assessmentYear }: TaxDashboardProps) {
 
       {shown.comparison && <RegimeComparisonCard comparison={shown.comparison} />}
 
+      {/* Scenario Studio Teaser Card */}
+      <div className="rounded-card border border-periwinkle-soft bg-gradient-to-r from-accent/5 via-periwinkle-soft/20 to-white p-4 shadow-card flex flex-wrap items-center justify-between gap-3">
+        <div className="space-y-0.5">
+          <div className="flex items-center gap-2">
+            <span className="text-accent text-sm font-bold">⚡</span>
+            <span className="text-xs font-bold text-ink uppercase tracking-wider">
+              Scenario Modeling Studio
+            </span>
+          </div>
+          <p className="text-xs text-ink-secondary">
+            Simulate what-if changes: regime switch, maxing 80C &amp; NPS, home loan interest, or capital gains timing side-by-side.
+          </p>
+        </div>
+        <a
+          href={`/tax/${assessmentYear}/scenario`}
+          className="rounded-btn px-3.5 py-1.5 text-xs font-semibold text-white shadow-sm transition-opacity hover:opacity-90 shrink-0"
+          style={{ background: 'var(--gradient-brand)' }}
+        >
+          Model Scenarios &rarr;
+        </a>
+      </div>
+
       <p className="text-xs text-muted">
         Figures are computed by Verra&rsquo;s deterministic tax calculators with rule citations
         &mdash; hover any amount to see its source. A licensed professional must review and approve
