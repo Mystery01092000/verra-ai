@@ -213,3 +213,23 @@ Fix the critical architectural blockers identified in `docs/Verra_Implementation
 - Validation: 217 backend tests, strict mypy, ruff, frontend build — all green.
 
 ---
+
+## Session 2026-09-30 — Tax Scenario Modeling Studio (`/tax/[year]/scenario`)
+
+- **Interactive Scenario Studio (`ScenarioBuilder.tsx`)**:
+  - Implemented side-by-side scenario modeling matching PRD FR-TX-9..12 & TAX-REQ-011.
+  - Side-by-side hero comparison cards: Baseline vs. Active Scenario showing Total Tax Liability, Tax Delta Pill (`−₹XX Saving` / `+₹XX Increase`), Effective Tax Rate delta, and Annual In-Hand delta.
+  - 5 quick strategy presets: "Maximize 80C + NPS (Old Regime)", "Switch Regime (New vs Old)", "Home Loan Section 24(b)", "Realize Capital Gains", and "Full Health Cover (80D)".
+  - Interactive parameter controls for Salary, Capital Gains, House Property, and Other Sources income, plus regime-aware deductions: Section 80C (capped ₹1.5L), 80D (capped ₹25k), 80CCD(1B) NPS (capped ₹50k), and Section 24(b) housing loan interest (capped ₹2L).
+  - Standard deduction automatically applied & displayed with Finance Act 2024 citation (₹75k New Regime / ₹50k Old Regime).
+  - Side-by-side detailed line-by-line comparison matrix (Gross Income, Deductions, Net Taxable Income, Slab Tax, Rebate 87A, Surcharge, Cess, Total Tax, TDS/Advance tax credits, and Net Payable/Refund due) with color-coded deltas.
+  - Strategic takeaways & breakeven analysis citing Section 115BAC, 87A, and 16(ia).
+  - "Promote to Baseline" action that updates the baseline profile in real-time with visual toast confirmation.
+  - "Ask Verra about this Scenario" CTA deep-linking into chat consultation with contextual prompts.
+- **Client-Side Deterministic Calculator (`scenario-calculator.ts`)**:
+  - Pure TypeScript implementation of Indian tax engine for AY 2025-26 matching `verra_shared.tax.liability` and `compare` logic for instant, zero-latency recomputation and offline resilience.
+- **Compute API Route Extended (`/api/tax/compute`)**:
+  - Upgraded parser and payload mapper to support rich income heads (`salary`, `capitalGains`, `houseProperty`, `otherSources`) and deductions (`section80c`, `section80d`, `section80ccd1b`, `section24`, `standardDeduction`), plus advance tax paid.
+- **Subnavigation (`TaxNavHeader.tsx`)**:
+  - Added module navigation bar with tabs for "Overview & Filing" (`/tax/[year]`) and "Scenario Studio" (`/tax/[year]/scenario`), AY badge, and engine status indicator.
+  - Added "Scenario Studio" teaser card in `TaxDashboard.tsx` for easy discovery.

@@ -3,6 +3,26 @@
 All notable changes to Verra. Format follows [Keep a Changelog](https://keepachangelog.com/);
 versioning follows [SemVer](https://semver.org/) (pre‑1.0: minor bumps may include breaking changes).
 
+## [0.2.1] — 2026-09-30
+
+### Added
+- **Tax Scenario Modeling Studio** (`/tax/[year]/scenario`): side-by-side scenario simulation
+  (baseline vs. active scenario) with real-time tax delta, annual in-hand delta, and effective rate
+  tracking.
+- **5 Strategy Presets**: "Maximize 80C + NPS", "Switch Regime", "Home Loan Section 24(b)", "Realize
+  Capital Gains", and "Full Health Cover (80D)".
+- **Detailed comparison matrix**: line-by-line statutory reconciliation between baseline and scenario
+  with color-coded deltas and section citations (115BAC, 87A, 16(ia), 80C, 24(b)).
+- **Promote to Baseline action**: one-click adoption of optimized scenario parameters as the active
+  workspace profile with receipt feedback.
+- **Client-side deterministic tax calculator** (`scenario-calculator.ts`): zero-latency, offline-resilient
+  AY 2025-26 computation matching `verra_shared.tax.liability`.
+- **Tax module subnavigation** (`TaxNavHeader.tsx`): top tab bar linking Overview & Filing with
+  Scenario Studio, plus quick-discovery card in `TaxDashboard.tsx`.
+- **Extended `/api/tax/compute`**: enriched to support multi-head income (`salary`, `capitalGains`,
+  `houseProperty`, `otherSources`) and deductions (`section80c`, `section80d`, `section80ccd1b`,
+  `section24`).
+
 ## [0.2.0] — 2026-07-03
 
 ### Added
